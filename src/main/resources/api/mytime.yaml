@@ -1,0 +1,63 @@
+openapi: 3.0.2
+info:
+  title: MyTime
+  description: MyTime
+  version: 1.0.0
+servers:
+  - url: /
+    description: local accessible url
+
+paths:
+  /calendar:
+    get:
+      operationId: getCalendar
+      parameters:
+        - in: query
+          name: week
+          required: true
+          schema:
+            type: string
+            format: string
+      summary: Find your calendar
+      tags:
+        - calendar
+      responses:
+        200:
+          description: "General response for calendar Request"
+          content:
+            "application/json":
+              schema:
+                type: string
+        400:
+          description: ""
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/errorList'
+        500:
+          description: "Error details"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/errorList'
+components:
+  schemas:
+    errorList:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+      xml:
+        name: 'errorList'
+
+    error:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+
+
